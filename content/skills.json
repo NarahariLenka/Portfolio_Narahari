@@ -1,0 +1,65 @@
+{
+  "_help": "Section 03 — Skills. Each skill is one block between { and }. Copy a whole block to add a skill, delete a block to remove one. 'tools' is the list shown under the skill.",
+  "number": "03",
+  "title": "Skills",
+  "skills": [
+    {
+      "name": "Python",
+      "description": "My core language for data analysis, automation and machine learning workflows.",
+      "tools": [
+        "NumPy",
+        "Pandas",
+        "Matplotlib",
+        "Seaborn",
+        "Scikit-learn"
+      ]
+    },
+    {
+      "name": "Java",
+      "description": "Object-oriented programming and the data structures and algorithms behind problem solving.",
+      "tools": [
+        "OOP",
+        "DSA"
+      ]
+    },
+    {
+      "name": "SQL",
+      "description": "Querying, joining and shaping relational data.",
+      "tools": [
+        "MySQL",
+        "PostgreSQL"
+      ]
+    },
+    {
+      "name": "Data Science",
+      "description": "Taking raw data to insight — cleaning, exploring and modelling it.",
+      "tools": [
+        "Data Cleaning",
+        "Data Preprocessing",
+        "EDA",
+        "Regression",
+        "Classification",
+        "Clustering",
+        "Statistics",
+        "Probability"
+      ]
+    },
+    {
+      "name": "React / TypeScript",
+      "description": "Building typed, interactive interfaces for the web.",
+      "tools": [
+        "React",
+        "TypeScript",
+        "HTML/CSS"
+      ]
+    },
+    {
+      "name": "Power BI",
+      "description": "Turning data into clear dashboards and reports.",
+      "tools": [
+        "Power BI",
+        "Excel"
+      ]
+    }
+  ]
+}

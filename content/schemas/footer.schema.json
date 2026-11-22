@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Footer",
+  "description": "The thin strip at the very bottom of the website.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "copyright": {
+      "type": "string",
+      "description": "Left side, e.g. © 2026 Your Name · City, Country. Leave \"\" to hide."
+    },
+    "signoff": {
+      "type": "string",
+      "description": "Short line in the middle. Leave \"\" to hide."
+    },
+    "backToTop": {
+      "type": "string",
+      "description": "Text of the button that scrolls back to the top. Leave \"\" to hide the button."
+    }
+  },
+  "additionalProperties": false
+}

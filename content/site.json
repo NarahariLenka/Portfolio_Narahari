@@ -1,0 +1,24 @@
+{
+  "_help": "General website text. Change only the text inside the quotes on the right. See EDITING-GUIDE.md.",
+  "browserTabTitle": "Narahari Lenka — Portfolio",
+  "searchDescription": "The portfolio of Narahari Lenka.",
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certificates": "Certificates",
+    "contact": "Contact"
+  },
+  "smallLabels": {
+    "projectPreviewPlaceholder": "Project preview",
+    "certificatePlaceholder": "Certificate",
+    "untitledCertificate": "Certificate",
+    "githubLink": "GitHub",
+    "liveSiteLink": "Live site",
+    "viewCredentialLink": "View credential",
+    "emailIconTooltip": "Email",
+    "linkedinIconTooltip": "LinkedIn",
+    "githubIconTooltip": "GitHub"
+  }
+}

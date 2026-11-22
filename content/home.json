@@ -1,0 +1,7 @@
+{
+  "_help": "The first screen (Home). To change the photo: put your image in public/images/portrait/ and type its file name below.",
+  "greeting": "Welcome, I’m",
+  "name": "Narahari Lenka",
+  "portraitImage": "portrait-placeholder.webp",
+  "portraitDescription": "Portrait of Narahari Lenka"
+}

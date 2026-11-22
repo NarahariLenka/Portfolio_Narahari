@@ -1,0 +1,6 @@
+{
+  "$schema": "./schemas/footer.schema.json",
+  "copyright": "© 2026 Narahari Lenka · Hyderabad, India",
+  "signoff": "Designed with precision.",
+  "backToTop": "Back to top"
+}

@@ -1,0 +1,42 @@
+{
+  "_help": "Section 05 — Certificates. Each certificate is one block between { and }. Put the certificate picture in public/images/certificates/ and type its file name in 'image'. Leave any field as \"\" if you don't need it.",
+  "number": "05",
+  "title": "Certificates",
+  "certificates": [
+    {
+      "title": "",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "credentialLink": ""
+    },
+    {
+      "title": "",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "credentialLink": ""
+    },
+    {
+      "title": "",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "credentialLink": ""
+    },
+    {
+      "title": "",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "credentialLink": ""
+    },
+    {
+      "title": "",
+      "issuer": "",
+      "date": "",
+      "image": "",
+      "credentialLink": ""
+    }
+  ]
+}

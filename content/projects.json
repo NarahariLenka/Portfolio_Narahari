@@ -1,0 +1,42 @@
+{
+  "_help": "Section 04 — Projects. Each project is one block between { and }. For a screenshot: put the image in public/images/projects/ and type its file name in 'image' (leave \"\" for the empty preview frame). Links: paste the full address, or leave \"\" to hide the link.",
+  "number": "04",
+  "title": "Projects",
+  "projects": [
+    {
+      "title": "Smart AI Credit Score Tracker",
+      "description": "An AI-assisted web app for tracking credit scores, built with React and TypeScript on top of the Gemini API.",
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Gemini API"
+      ],
+      "image": "",
+      "githubLink": "",
+      "liveLink": ""
+    },
+    {
+      "title": "Google Play Store Data Analysis Dashboard",
+      "description": "A Power BI dashboard for exploring and analysing Google Play Store app data.",
+      "technologies": [
+        "Power BI"
+      ],
+      "image": "",
+      "githubLink": "",
+      "liveLink": ""
+    },
+    {
+      "title": "RetinaX",
+      "description": "A project built across Python and MATLAB, with a TypeScript and CSS front end.",
+      "technologies": [
+        "Python",
+        "TypeScript",
+        "CSS",
+        "Matlab"
+      ],
+      "image": "",
+      "githubLink": "",
+      "liveLink": ""
+    }
+  ]
+}
