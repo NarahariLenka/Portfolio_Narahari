@@ -17,7 +17,15 @@ function jwtRole(key: string): string | undefined {
   }
 }
 
-export function validateSupabaseEnv(env: ImportMetaEnv = import.meta.env ?? {}) {
+// Read the two variables by name: referencing `import.meta.env` as a whole would make Vite
+// inline EVERY VITE_* variable (including host-injected ones such as Vercel's system
+// variables) into the public bundle.
+const BUILD_ENV = {
+  VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+  VITE_SUPABASE_PUBLISHABLE_KEY: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+} as ImportMetaEnv
+
+export function validateSupabaseEnv(env: ImportMetaEnv = BUILD_ENV) {
   const url = env.VITE_SUPABASE_URL?.trim() ?? ''
   const key = env.VITE_SUPABASE_PUBLISHABLE_KEY?.trim() ?? ''
   const problems: string[] = []
