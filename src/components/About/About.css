@@ -1,0 +1,80 @@
+/* Quiet editorial pause after the Hero: type and negative space carry it. */
+.about {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2vw, 2rem);
+  padding: clamp(5rem, 13svh, 8rem) clamp(1.5rem, 6vw, 7rem) 52svh;
+}
+
+/* Settles the environment behind the copy without a hard edge. */
+.about::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    radial-gradient(ellipse 60% 40% at 42% 48%, rgb(var(--scrim) / 0.5), transparent 75%);
+  pointer-events: none;
+}
+
+.about .section-label {
+  grid-column: 2 / span 4;
+  margin-bottom: clamp(2.5rem, 6svh, 4.5rem);
+}
+
+.about__statement {
+  grid-column: 2 / span 9;
+  margin: 0;
+}
+
+.about__statement .scroll-reveal-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.9vw, 5.6rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--heading);
+  text-wrap: balance;
+}
+
+.about__details {
+  grid-column: 7 / span 4;
+  margin: clamp(2rem, 6svh, 4.5rem) 0 0;
+}
+
+.about__details .scroll-reveal-text {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.05vw, 1.15rem);
+  line-height: 1.7;
+  font-weight: 400;
+  color: rgb(var(--ink) / 0.62);
+}
+
+@media (max-width: 767px) {
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+    padding: clamp(4.5rem, 11svh, 6.5rem) 6vw 40svh;
+  }
+
+  .about .section-label,
+  .about__statement,
+  .about__details {
+    grid-column: 1;
+  }
+
+  .about__statement .scroll-reveal-text {
+    font-size: clamp(2.1rem, 9.6vw, 2.6rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+
+  .about__details {
+    max-width: 34ch;
+    margin-top: 2.75rem;
+  }
+
+  .about__details .scroll-reveal-text {
+    font-size: 1rem;
+  }
+}
