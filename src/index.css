@@ -77,7 +77,8 @@ body {
 }
 
 .section-label__index {
-  color: rgb(var(--ink) / 0.5);
+  /* 0.55: WCAG AA contrast (4.8:1) on the dark background; light theme has its own colour. */
+  color: rgb(var(--ink) / 0.55);
 }
 
 /* Fixed WebGL environment behind all content. */
