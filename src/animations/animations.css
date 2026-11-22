@@ -1,0 +1,35 @@
+/* Layers for registry animations. Click-through and out of layout, so they can't
+   interfere with the page or with each other. Only present while one is enabled. */
+.anim-layer {
+  pointer-events: none;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Above the cosmic background (z -1, earlier in the DOM), behind all content. */
+.anim-layer--page-background {
+  position: fixed;
+  z-index: -1;
+}
+
+/* Above content; below the shooting-star sling (60) and the navigation (70). */
+.anim-layer--page-overlay {
+  position: fixed;
+  z-index: 55;
+}
+
+/* Sections are position: relative. A background layer sits at z -1 inside the section's
+   own stacking context (isolation is set only while such a layer exists). */
+.anim-layer--section-background {
+  position: absolute;
+  z-index: -1;
+}
+
+section:has(> .anim-layer--section-background) {
+  isolation: isolate;
+}
+
+.anim-layer--section-overlay {
+  position: absolute;
+  z-index: 5;
+}
