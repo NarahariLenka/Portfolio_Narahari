@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- cms-prefetch: replaced at build time (boot-preload.ts); before any stylesheet so it runs at once -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#05050b" />
+    <meta name="description" content="The portfolio of Narahari Lenka." />
+    <script>
+      // First paint in the published default theme: dark, or light when the CMS default is
+      // light (remembered from the previous visit by main.tsx). Visitors can switch afterwards.
+      ;(function () {
+        var light = false
+        try {
+          light = localStorage.getItem('portfolio:default-theme') === 'light'
+        } catch (e) {}
+        var bg = light ? '#F3F5FA' : '#05050b'
+        document.documentElement.dataset.theme = light ? 'light' : 'dark'
+        document.documentElement.style.background = bg
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute('content', bg)
+      })()
+    </script>
+    <title>Narahari Lenka — Portfolio</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
