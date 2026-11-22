@@ -292,18 +292,37 @@ function AnimationCard({ def, editor, onPreview }: { def: AnyAnimationDefinition
 
       {params.length > 0 && (
         <div className="adm-devices">
-          <div className="adm-tabs" role="tablist" aria-label={`${def.name} values for`}>
-            {DEVICES.map((d) => (
-              <button key={d} type="button" role="tab" className="adm-tab" aria-selected={device === d} onClick={() => setDevice(d)}>
-                {d === 'desktop' ? 'Desktop values' : 'Mobile values'}
-                {managedParamPaths(def, d).some((p) => changed(p)) && <span className="adm-dot" aria-label="(unsaved changes)" />}
-              </button>
-            ))}
+          <div className="adm-tabs">
+            {/* Only the two tabs are inside the tablist (ARIA: a tablist may contain tabs only). */}
+            <div className="adm-tabs__list" role="tablist" aria-label={`${def.name} values for`}>
+              {DEVICES.map((d, i) => (
+                <button
+                  key={d}
+                  type="button"
+                  role="tab"
+                  id={`${def.id}-tab-${d}`}
+                  aria-controls={`${def.id}-panel`}
+                  className="adm-tab"
+                  aria-selected={device === d}
+                  tabIndex={device === d ? 0 : -1}
+                  onClick={() => setDevice(d)}
+                  onKeyDown={(e) => {
+                    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
+                    const next = DEVICES[(i + (e.key === 'ArrowRight' ? 1 : DEVICES.length - 1)) % DEVICES.length]
+                    setDevice(next)
+                    document.getElementById(`${def.id}-tab-${next}`)?.focus()
+                  }}
+                >
+                  {d === 'desktop' ? 'Desktop values' : 'Mobile values'}
+                  {managedParamPaths(def, d).some((p) => changed(p)) && <span className="adm-dot" aria-label="(unsaved changes)" />}
+                </button>
+              ))}
+            </div>
             <button type="button" className="adm-reset adm-tabs__reset" onClick={() => reset(...managedParamPaths(def, device))}>
               Reset {device} values
             </button>
           </div>
-          <div role="tabpanel" className="adm-devices__panel">
+          <div role="tabpanel" id={`${def.id}-panel`} aria-labelledby={`${def.id}-tab-${device}`} className="adm-devices__panel">
             {params.map(([key, spec]) => {
               const s = paramState(def, cfg, device, key)
               const path = paramPath(def.id, device, key)

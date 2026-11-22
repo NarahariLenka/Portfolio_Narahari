@@ -328,6 +328,12 @@ select.adm-input {
   background: rgb(var(--accent-rgb) / 0.16);
 }
 
+.adm-tabs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
 .adm-tabs__reset {
   margin-left: auto;
 }
