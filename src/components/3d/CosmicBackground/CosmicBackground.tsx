@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { LinearFilter, NoColorSpace, ShaderMaterial, TextureLoader, Vector2, Vector3, Vector4 } from 'three'
 import dawnUrl from '../../../assets/backgrounds/dawn-background.webp'
@@ -23,10 +23,14 @@ function isLowPowerDevice() {
 interface SceneProps {
   quality: SceneQuality
   reducedMotion: boolean
+  onCompiled: () => void
 }
 
-function CosmicScene({ quality, reducedMotion }: SceneProps) {
+function CosmicScene({ quality, reducedMotion, onCompiled }: SceneProps) {
   const size = useThree((s) => s.size)
+  const gl = useThree((s) => s.gl)
+  const scene = useThree((s) => s.scene)
+  const camera = useThree((s) => s.camera)
 
   const material = useMemo(
     () =>
@@ -125,6 +129,22 @@ function CosmicScene({ quality, reducedMotion }: SceneProps) {
 
   useFrame((_, delta) => surface.update(delta, reducedMotion))
 
+  // Compile the (large) sky shader before the first frame. Otherwise the first render links
+  // the program synchronously and blocks the main thread for the whole compile; compileAsync
+  // uses KHR_parallel_shader_compile so the browser compiles it off the main thread.
+  // The frame loop starts once it is done (or straight away if compiling fails).
+  useEffect(() => {
+    let cancelled = false
+    gl.compileAsync(scene, camera)
+      .catch(() => undefined)
+      .then(() => {
+        if (!cancelled) onCompiled()
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [gl, scene, camera, material, onCompiled])
+
   return (
     <mesh frustumCulled={false} material={material}>
       <planeGeometry args={[2, 2]} />
@@ -137,11 +157,16 @@ export default function CosmicBackground() {
   const reducedMotion = useReducedMotion()
   const quality = isMobile || isLowPowerDevice() ? mobileScene : desktopScene
   const dpr = Math.min(window.devicePixelRatio || 1, quality.maxDpr)
+  // Hidden with no frame loop until the shader is compiled (the page background shows meanwhile).
+  const [compiled, setCompiled] = useState(false)
+  const onCompiled = useCallback(() => setCompiled(true), [])
 
   return (
     <div className="cosmic-background" aria-hidden="true">
       <Canvas
         dpr={dpr}
+        frameloop={compiled ? 'always' : 'never'}
+        style={compiled ? undefined : { visibility: 'hidden' }}
         flat
         linear
         gl={{
@@ -153,7 +178,7 @@ export default function CosmicBackground() {
         }}
         fallback={<div className="cosmic-background__fallback" />}
       >
-        <CosmicScene quality={quality} reducedMotion={reducedMotion} />
+        <CosmicScene quality={quality} reducedMotion={reducedMotion} onCompiled={onCompiled} />
       </Canvas>
     </div>
   )
