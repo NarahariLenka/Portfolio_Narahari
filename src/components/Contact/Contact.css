@@ -1,0 +1,244 @@
+/* Final stage of the journey: one statement, three ways to reach out, a dock. */
+.contact {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100svh;
+  overflow: clip; /* the glow must not extend the page */
+  padding: 18svh clamp(1.5rem, 6vw, 7rem) calc(9rem + 6svh);
+  text-align: center;
+}
+
+/* Settle the environment so the closing words carry the frame. */
+.contact::before {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  background: linear-gradient(to bottom, transparent, rgb(var(--scrim) / 0.55) 30%, rgb(var(--scrim) / 0.7));
+  pointer-events: none;
+}
+
+/* React Bits DotField: a grid across the whole section that bulges around the cursor.
+   Only the top edge fades, so it doesn't start on a hard line after Certificates. */
+.contact__dots {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 8%);
+}
+
+/* Atmospheric endpoint: blooms once when the bottom is reached (see Contact.tsx). */
+.contact__glow {
+  position: absolute;
+  bottom: -18svh;
+  left: 50%;
+  z-index: -1;
+  width: min(110vw, 70rem);
+  aspect-ratio: 2 / 1;
+  translate: -50% 0;
+  background: radial-gradient(closest-side, rgb(var(--accent-rgb) / 0.16), rgb(var(--glow) / 0.08) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact__label {
+  justify-content: center;
+}
+
+.contact__headline {
+  margin: clamp(2.5rem, 7svh, 4.5rem) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 12.5rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--heading);
+}
+
+/* SplitFlapText, letters only: no tiles, borders, shadows or fold line. */
+.contact__flap {
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.contact__flap .split-flap-text__tile {
+  width: 0.64em;
+  height: 0.9em;
+  overflow: visible;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* Settle with natural Space Grotesk spacing rather than fixed board cells. */
+.contact__flap .split-flap-text__tile[data-char="L"] { width: 0.52em; }
+.contact__flap .split-flap-text__tile[data-char="E"],
+.contact__flap .split-flap-text__tile[data-char="T"],
+.contact__flap .split-flap-text__tile[data-char="S"] { width: 0.57em; }
+.contact__flap .split-flap-text__tile[data-char="R"] { width: 0.6em; }
+.contact__flap .split-flap-text__tile[data-char="C"],
+.contact__flap .split-flap-text__tile[data-char="A"] { width: 0.65em; }
+.contact__flap .split-flap-text__tile[data-char="’"],
+.contact__flap .split-flap-text__tile[data-char="'"] { width: 0.24em; }
+
+.contact__flap .split-flap-text__tile::before,
+.contact__flap .split-flap-text__tile::after {
+  display: none;
+}
+
+.contact__flap .split-flap-text__half,
+.contact__flap .split-flap-text__flap {
+  background: none;
+}
+
+.contact__flap .split-flap-text__char {
+  color: inherit;
+  text-shadow: none;
+}
+
+.dock__link:focus-visible {
+  outline: 1px solid var(--color-lavender);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------------- dock */
+.dock {
+  position: absolute;
+  bottom: 6svh;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.dock__list {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0.55rem;
+  list-style: none;
+  border: 1px solid rgb(var(--accent-hi) / 0.2);
+  border-radius: 1.1rem;
+  background: rgb(var(--surface) / 0.55);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 18px 50px rgb(var(--scrim) / 0.55);
+  backdrop-filter: blur(14px);
+}
+
+.dock__item {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: 50% 100%;
+}
+
+.dock__link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgb(var(--ink) / 0.08);
+  border-radius: 0.8rem;
+  background: rgb(255 255 255 / 0.03);
+  color: rgb(var(--ink) / 0.8);
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* Label floats above the icon on hover / keyboard focus. */
+.dock__label {
+  position: absolute;
+  bottom: calc(100% + 0.7rem);
+  left: 50%;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgb(var(--accent-hi) / 0.18);
+  border-radius: 0.4rem;
+  background: rgb(var(--surface) / 0.85);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: var(--color-lavender-soft);
+  opacity: 0;
+  translate: -50% 4px;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    translate 0.25s ease;
+}
+
+.dock__link:focus-visible .dock__label {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+.dock__link:focus-visible {
+  color: var(--heading);
+  border-color: rgb(var(--accent-hi) / 0.35);
+}
+
+/* Magnification only where hover genuinely exists. */
+@media (hover: hover) and (pointer: fine) {
+  .dock__item:hover {
+    transform: translateY(-6px) scale(1.18);
+  }
+
+  .dock__item:hover + .dock__item,
+  .dock__item:has(+ .dock__item:hover) {
+    transform: translateY(-2px) scale(1.07);
+  }
+
+  .dock__link:hover {
+    color: var(--heading);
+    border-color: rgb(var(--accent-hi) / 0.35);
+    background: rgb(var(--accent-rgb) / 0.1);
+  }
+
+  .dock__link:hover .dock__label {
+    opacity: 1;
+    translate: -50% 0;
+  }
+}
+
+/* Touch: a quick, tactile press instead of hover. */
+.dock__link:active {
+  background: rgb(var(--accent-rgb) / 0.14);
+}
+
+/* ---------------------------------------------------------------- mobile */
+@media (max-width: 767px) {
+  .contact {
+    padding: 16svh 6vw calc(7rem + 5svh);
+  }
+
+  .contact__headline {
+    font-size: clamp(3.75rem, 21vw, 5.5rem);
+  }
+
+
+  .dock {
+    bottom: 4svh;
+  }
+
+  .dock__link {
+    width: 2.9rem;
+    height: 2.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock__item,
+  .dock__label {
+    transition: none;
+  }
+}
