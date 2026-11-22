@@ -1,0 +1,150 @@
+/* Scroll runway: the stage stays put while the timeline scrubs across it. */
+.hero {
+  --portrait-h: 68svh;
+  --portrait-top: 9svh;
+  --portrait-x: 22vw; /* centre of the portrait at rest (LEFT) */
+  position: relative;
+  height: 420svh;
+}
+
+.hero__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+  pointer-events: none; /* the water underneath keeps receiving the pointer */
+}
+
+/* ---------------------------------------------------------------- copy */
+.hero__copy {
+  position: absolute;
+  top: 31svh;
+  left: 53vw;
+  width: min(44vw, 46rem);
+  will-change: transform, opacity;
+}
+
+.hero__greeting {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--color-lavender);
+}
+
+.hero__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8.4vw, 9.75rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--heading);
+  text-wrap: balance;
+}
+
+.hero__name span {
+  display: block;
+}
+
+/* ---------------------------------------------------------------- portrait */
+.hero__figure {
+  position: absolute;
+  top: var(--portrait-top);
+  left: var(--portrait-x);
+  height: var(--portrait-h);
+  aspect-ratio: 3 / 4;
+  /* Centre on --portrait-x without a transform: GSAP owns 'transform' for the scroll
+     travel, and a CSS translate here could be dropped when GSAP takes over. */
+  margin-left: calc(var(--portrait-h) * -0.375);
+  transform-origin: 50% 85%;
+  will-change: transform, opacity;
+}
+
+/* Faint atmosphere so the figure sits in the light of the scene, not on top of it. */
+.hero__figure::before {
+  position: absolute;
+  inset: 8% -20% 0;
+  z-index: -1;
+  content: "";
+  background: radial-gradient(closest-side, rgb(var(--glow) / 0.22), transparent);
+}
+
+.hero__portrait,
+.hero__reflection {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  user-select: none;
+}
+
+/* Edges dissolve into the night; the base sinks into the waterline. */
+.hero__portrait {
+  mask-image:
+    radial-gradient(ellipse 72% 80% at 50% 38%, #000 58%, transparent 100%),
+    linear-gradient(to bottom, #000 64%, transparent 97%);
+  mask-composite: intersect;
+}
+
+/* Dim, stretched reflection on the water below the figure. */
+.hero__reflection {
+  position: absolute;
+  top: 97%;
+  left: 0;
+  height: 42%;
+  transform: scaleY(-1);
+  opacity: 0.16;
+  filter: blur(3px);
+  mask-image: linear-gradient(to top, #000 0%, transparent 85%);
+}
+
+/* ---------------------------------------------------------------- mobile */
+@media (max-width: 767px) {
+  .hero {
+    --portrait-h: 52svh;
+    --portrait-top: 31svh;
+    --portrait-x: 38vw;
+    height: 320svh;
+  }
+
+  .hero__copy {
+    top: 11svh;
+    left: 6vw;
+    width: 88vw;
+  }
+
+  .hero__greeting {
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+  }
+
+  .hero__name {
+    font-size: clamp(3rem, 15.5vw, 4.5rem);
+  }
+}
+
+/* Reduced motion: one stable, readable frame, no scroll runway. */
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    height: 100svh;
+  }
+}
+
+/* Light: the subject sits inside the dawn haze rather than on top of it. */
+[data-theme="light"] .hero__portrait {
+  opacity: 0.88;
+  filter: contrast(0.82) brightness(1.5) saturate(0.85);
+}
+
+[data-theme="light"] .hero__reflection {
+  opacity: 0.12;
+}
+
+[data-theme="light"] .hero__figure::before {
+  background: radial-gradient(closest-side, rgb(255 253 208 / 0.28), transparent);
+}
