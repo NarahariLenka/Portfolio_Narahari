@@ -13,8 +13,27 @@
  *   • <link rel="preload" as="font"> for the Latin Space Grotesk file (the first screen's font).
  * Build only; the dev server is unchanged.
  */
+import { existsSync, readFileSync } from 'node:fs'
 import type { Plugin } from 'vite'
 import { PREFETCH_GLOBAL, PUBLISHED_QUERIES } from './src/data/publishedQueries.ts'
+
+/**
+ * The hero portrait from the local content (content/home.json), or the placeholder: the
+ * largest image on the first screen (the LCP element). Without a hint it is only requested
+ * once the app has booted and rendered the hero. Same file name rules as image() in
+ * src/data/content.ts. A portrait published from the CMS replaces it at runtime; this small
+ * file is then fetched without being used.
+ */
+export function localPortraitHref(root = process.cwd()): string | null {
+  let name = 'portrait-placeholder.webp'
+  try {
+    const v = (JSON.parse(readFileSync(`${root}/content/home.json`, 'utf8')) as { portraitImage?: unknown }).portraitImage
+    if (typeof v === 'string' && /^[\w.-]+\.(webp|avif|png|jpe?g)$/i.test(v.trim())) name = v.trim()
+  } catch {
+    // no local content: fall back to the placeholder
+  }
+  return existsSync(`${root}/public/images/portrait/${name}`) ? `/images/portrait/${encodeURIComponent(name)}` : null
+}
 
 const ENTRY_HINTS = ['src/App.tsx', 'src/data/remoteLoader.ts']
 
@@ -104,6 +123,8 @@ export default function bootPreload(supabaseUrl: string | undefined, publishable
         for (const a of Object.values(bundle))
           if (a.type === 'asset' && /(^|\/)space-grotesk-latin-(?!ext-)[\w-]+\.woff2$/.test(a.fileName))
             tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', crossorigin: true, href: `/${a.fileName}` }, injectTo: 'head' })
+        const portrait = localPortraitHref()
+        if (portrait) tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'image', href: portrait, fetchpriority: 'high' }, injectTo: 'head' })
         for (const f of files) tags.push({ tag: 'link', attrs: { rel: 'modulepreload', crossorigin: true, href: `/${f}` }, injectTo: 'head' })
         return out(tags)
       },
