@@ -1,0 +1,59 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies and build output
+node_modules
+dist
+dist-ssr
+coverage
+*.tsbuildinfo
+.vite
+.cache
+.temp
+tmp
+
+# Environment files: never commit real values. Only the placeholder template is tracked.
+.env
+.env.*
+*.local
+!.env.example
+
+# Supabase CLI local metadata (linked project, database pooler host, versions)
+supabase/.temp/
+supabase/.branches/
+
+# Credentials and private keys (should never be in this folder at all)
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_rsa*
+id_ed25519*
+*.secret
+secrets.*
+service-account*.json
+
+# Backups and editor leftovers
+*.bak
+*.orig
+*.tmp
+*~
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

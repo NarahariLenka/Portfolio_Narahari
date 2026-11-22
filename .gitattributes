@@ -1,0 +1,9 @@
+# Normalise text files to LF in the repository; binary assets are never altered.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.woff2 binary
+*.webp binary
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary
