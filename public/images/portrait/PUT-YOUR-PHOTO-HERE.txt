@@ -1,0 +1,2 @@
+Put your photo here (jpg, png or webp).
+Then type its exact file name in content/home.json next to "portraitImage".

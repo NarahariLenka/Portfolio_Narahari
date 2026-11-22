@@ -1,0 +1,2 @@
+Put project screenshots here (jpg, png or webp, any size).
+Then type the exact file name in content/projects.json next to "image" for that project.

@@ -1,0 +1,2 @@
+Put certificate pictures here (jpg, png or webp, any size).
+Then type the exact file name in content/certificates.json next to "image" for that certificate.
