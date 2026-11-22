@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: Inter, sans-serif;
+  --color-night: #05050b;
+  --color-night-blue: #080a18;
+  --color-lavender: #a78bfa;
+  --color-lavender-soft: #ddd6fe;
+  --color-cool-blue: #8da9d8;
+}
+
+:root {
+  font-family: var(--font-body);
+  color: var(--color-lavender-soft);
+  background: var(--color-night);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--color-night);
+}
+
+body {
+  overflow-x: clip;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.site-shell {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Small section marker, e.g. "02 • ABOUT". */
+.section-label {
+  display: flex;
+  gap: 0.75em;
+  align-items: center;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-lavender);
+}
+
+.section-label__index {
+  color: rgb(var(--ink) / 0.5);
+}
+
+/* Fixed WebGL environment behind all content. */
+.cosmic-background {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background: var(--bg);
+}
+
+/* Static still of the same scene when WebGL is unavailable. */
+.cosmic-background__fallback {
+  width: 100%;
+  height: 100%;
+  background: var(--color-night) url("./assets/backgrounds/cosmic-background.webp")
+    center / cover no-repeat;
+}
+
+@media (max-width: 767px) {
+  .cosmic-background__fallback {
+    background-position: 38% center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Theme switch: colours ease across the page for the duration of the switch only. */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    color 0.6s ease,
+    background-color 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease,
+    fill 0.6s ease,
+    stroke 0.6s ease !important;
+}
+
+/* Light: the content sections sit on the clear dawn sky; keep their haze layers faint. */
+[data-theme="light"] .about::before,
+[data-theme="light"] .projects::before,
+[data-theme="light"] .certs::before,
+[data-theme="light"] .contact::before {
+  opacity: 0.15;
+}
+
+[data-theme="light"] .skills__focus {
+  background: none;
+}
+
+/* Light: body copy needs full-strength ink to read on the clear blue sky. */
+[data-theme="light"] .project__description,
+[data-theme="light"] .about__details .scroll-reveal-text,
+[data-theme="light"] .skill-info__summary,
+[data-theme="light"] .skill-info__related {
+  color: rgb(var(--ink) / 0.92);
+}
+
+/* Light: every supporting text element in full-strength dark navy so it reads on the sky. */
+[data-theme="light"] .section-label,
+[data-theme="light"] .section-label__index,
+[data-theme="light"] .skill-info__count,
+[data-theme="light"] .skill-info__count span,
+[data-theme="light"] .skill-info__summary,
+[data-theme="light"] .skill-info__related,
+[data-theme="light"] .skills__rail button[aria-current],
+[data-theme="light"] .project__number,
+[data-theme="light"] .project__tech,
+[data-theme="light"] .project__description,
+[data-theme="light"] .about__details .scroll-reveal-text,
+[data-theme="light"] .cert__index,
+[data-theme="light"] .cert__tab-title,
+[data-theme="light"] .cert__issuer,
+[data-theme="light"] .is-placeholder,
+[data-theme="light"] .project__placeholder span,
+[data-theme="light"] .cert__placeholder span,
+[data-theme="light"] .site-nav__links a {
+  color: #14152b;
+}
+
+[data-theme="light"] .skills__rail button {
+  color: rgb(20 21 43 / 0.78);
+}
+
+[data-theme="light"] .section-label,
+[data-theme="light"] .skill-info__count,
+[data-theme="light"] .skills__rail button,
+[data-theme="light"] .project__number,
+[data-theme="light"] .cert__index {
+  font-weight: 600;
+}
+
+[data-theme="light"] .skill-info__summary,
+[data-theme="light"] .skill-info__related,
+[data-theme="light"] .project__description,
+[data-theme="light"] .project__tech,
+[data-theme="light"] .about__details .scroll-reveal-text {
+  font-weight: 500;
+}
+
+[data-theme="light"] .skill-info__related {
+  border-top-color: rgb(20 21 43 / 0.25);
+}
+
+/* Sections below the hero while their chunk loads (App.tsx): keeps the footer below the fold. */
+.sections-pending {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.sections-pending--failed {
+  display: grid;
+  gap: 1rem;
+  place-content: center;
+  justify-items: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: rgb(var(--ink) / 0.8);
+}
+
+.sections-pending--failed p {
+  margin: 0;
+}
+
+.sections-pending--failed button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgb(var(--ink) / 0.3);
+  border-radius: 999px;
+  font: inherit;
+  color: rgb(var(--ink));
+  background: transparent;
+  cursor: pointer;
+}
