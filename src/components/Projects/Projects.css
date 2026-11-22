@@ -1,0 +1,263 @@
+/* Editorial run of work: large previews, offset metadata, varying scale. */
+.projects {
+  position: relative;
+  padding: 26svh clamp(1.5rem, 6vw, 7rem) 30svh;
+}
+
+/* Quiets the environment behind the work, fading in from the Skills scene. */
+.projects::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(var(--scrim) / 0.5) 18%,
+    rgb(var(--scrim) / 0.5) 85%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.projects__header {
+  margin-bottom: clamp(4rem, 14svh, 9rem);
+}
+
+.project {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2vw, 2rem);
+  align-items: center;
+}
+
+.project + .project {
+  margin-top: clamp(7rem, 24svh, 15rem);
+}
+
+/* ---------------------------------------------------------------- layout */
+.project__frame {
+  grid-row: 1;
+  grid-column: 2 / span 6;
+}
+
+.project__meta {
+  grid-row: 1;
+  grid-column: 9 / span 4;
+}
+
+.project--featured .project__frame {
+  grid-column: 1 / span 8;
+}
+
+.project--mirrored .project__frame {
+  grid-column: 6 / span 7;
+}
+
+.project--mirrored .project__meta {
+  grid-column: 1 / span 4;
+}
+
+/* ---------------------------------------------------------------- preview */
+.project__frame {
+  position: relative;
+  aspect-ratio: var(--ratio, 1.6);
+  overflow: hidden;
+  border: 1px solid rgb(var(--ink) / 0.1);
+  border-radius: 3px;
+  background: rgb(var(--surface) / 0.6);
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.5s ease;
+  will-change: transform;
+}
+
+.project__frame:hover {
+  border-color: rgb(var(--ink) / 0.24);
+}
+
+/* Slightly oversized so the depth shift never reveals an edge. */
+.project__media {
+  position: absolute;
+  inset: -14px;
+}
+
+.project__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project__placeholder {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgb(var(--glow) / 0.14), transparent 70%);
+}
+
+/* Crop marks: an intentional empty frame awaiting the real screenshot. */
+.project__placeholder::before,
+.project__placeholder::after {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  content: "";
+  border-color: rgb(var(--ink) / 0.3);
+  border-style: solid;
+}
+
+.project__placeholder::before {
+  top: 34px;
+  left: 34px;
+  border-width: 1px 0 0 1px;
+}
+
+.project__placeholder::after {
+  right: 34px;
+  bottom: 34px;
+  border-width: 0 1px 1px 0;
+}
+
+.project__placeholder span {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgb(var(--ink) / 0.32);
+}
+
+/* ---------------------------------------------------------------- metadata */
+/* ScrollReveal wraps text in its own span: keep each element's own typography. */
+.project__meta .scroll-reveal-text {
+  font: inherit;
+  letter-spacing: inherit;
+}
+.project__number {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: rgb(var(--ink) / 0.45);
+}
+
+.project__title {
+  margin: 1.1rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.6vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--heading);
+  text-wrap: balance;
+}
+
+.project--featured .project__title {
+  font-size: clamp(2.1rem, 3.2vw, 3.6rem);
+}
+
+.project__tech {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: rgb(var(--accent-rgb) / 0.9);
+}
+
+.project__description {
+  max-width: 36ch;
+  margin: 1.4rem 0 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgb(var(--ink) / 0.6);
+}
+
+.project__links {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project__links a {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-lavender-soft);
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--ink) / 0.3);
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.project__links a:hover,
+.project__links a:focus-visible {
+  text-decoration-color: var(--color-lavender);
+}
+
+.project__links a:focus-visible {
+  outline: 1px solid var(--color-lavender);
+  outline-offset: 4px;
+}
+
+/* ---------------------------------------------------------------- mid desktop */
+@media (max-width: 1100px) and (min-width: 768px) {
+  .project__frame,
+  .project--featured .project__frame {
+    grid-column: 1 / span 7;
+  }
+
+  .project__meta {
+    grid-column: 8 / span 5;
+  }
+
+  .project--mirrored .project__frame {
+    grid-column: 6 / span 7;
+  }
+
+  .project--mirrored .project__meta {
+    grid-column: 1 / span 5;
+  }
+}
+
+/* ---------------------------------------------------------------- mobile */
+@media (max-width: 767px) {
+  .projects {
+    padding: 18svh 6vw 20svh;
+  }
+
+  .project,
+  .project--featured,
+  .project--mirrored {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.75rem;
+  }
+
+  .project + .project {
+    margin-top: 6.5rem;
+  }
+
+  .project .project__frame,
+  .project .project__meta {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .project__title,
+  .project--featured .project__title {
+    margin-top: 0.75rem;
+    font-size: clamp(1.7rem, 7.6vw, 2.1rem);
+  }
+
+  .project__description {
+    margin-top: 1rem;
+  }
+
+  /* Touch feedback without hover. */
+  .project__frame:active {
+    border-color: rgb(var(--ink) / 0.24);
+  }
+}
