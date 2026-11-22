@@ -1,0 +1,31 @@
+/* Theme switch — marbled ink displacement (see themeTransition.ts).
+   Active only while a View Transition runs; nothing here affects the page otherwise. */
+
+/* Both surfaces stay perfectly still; only the mask threshold moves. The "hold" animation
+   keeps the transition alive for its full duration. */
+:root.theme-vt-flow::view-transition-old(root),
+:root.theme-vt-flow::view-transition-new(root) {
+  animation: theme-flow-hold var(--theme-flow-duration, 1400ms) linear both;
+  mix-blend-mode: normal;
+}
+
+/* Incoming theme: visible where the ink has reached (thresholded flow field). */
+:root.theme-vt-flow::view-transition-new(root) {
+  mask: url(#theme-flow-mask);
+}
+
+@keyframes theme-flow-hold {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: a short, plain crossfade. */
+:root.theme-vt-fade::view-transition-group(root),
+:root.theme-vt-fade::view-transition-old(root),
+:root.theme-vt-fade::view-transition-new(root) {
+  animation-duration: 150ms;
+}
