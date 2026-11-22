@@ -1,0 +1,224 @@
+/* Admin → Content (admin chunk only). */
+
+.adm-main:has(.adm-cards) {
+  max-width: 960px;
+}
+
+.adm-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.adm-card-btn {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  border: 1px solid var(--adm-line);
+  border-radius: 14px;
+  font: inherit;
+  text-align: left;
+  color: rgb(var(--ink));
+  background: rgb(var(--surface) / 0.55);
+  cursor: pointer;
+}
+
+.adm-card-btn:hover {
+  background: rgb(var(--ink) / 0.06);
+}
+
+.adm-card-btn[aria-current="true"] {
+  border-color: var(--accent);
+  background: rgb(var(--accent-rgb) / 0.12);
+}
+
+.adm-card-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.adm-card-btn__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.adm-card-btn__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.adm-card-btn__meta {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--adm-muted);
+}
+
+.adm-items {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.adm-item {
+  display: grid;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--adm-line);
+  border-radius: 12px;
+}
+
+.adm-item--open {
+  background: rgb(var(--ink) / 0.03);
+}
+
+.adm-item__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.adm-item__main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.adm-item__title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: rgb(var(--ink));
+  overflow-wrap: anywhere;
+}
+
+.adm-item__sub {
+  font-size: 0.8125rem;
+  color: var(--adm-muted);
+  overflow-wrap: anywhere;
+}
+
+.adm-item__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.adm-item__actions .adm-reset {
+  min-height: 32px;
+}
+
+.adm-rowform {
+  display: grid;
+  gap: 4px;
+}
+
+.adm-rowform__actions {
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.adm-checklist {
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 767px) {
+  .adm-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .adm-rowform__actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Project deletion (kept apart from the other item actions) */
+.adm-item__danger {
+  display: inline-flex;
+  margin-left: auto;
+  padding-left: 12px;
+  border-left: 1px solid var(--adm-line);
+}
+
+.adm-reset--danger {
+  border-color: rgb(239 68 68 / 0.45);
+  color: var(--adm-danger, #fca5a5);
+}
+
+.adm-reset--danger:hover:not(:disabled) {
+  background: rgb(239 68 68 / 0.12);
+}
+
+.adm-delete {
+  width: min(560px, 100%);
+}
+
+.adm-delete__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--heading);
+  overflow-wrap: anywhere;
+}
+
+.adm-delete__facts {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.adm-delete__ack {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+
+.adm-delete__media {
+  display: grid;
+  gap: 6px;
+  max-width: 280px;
+}
+
+.adm-delete__actions {
+  justify-content: flex-end;
+}
+
+.adm-button--danger-solid {
+  color: #fff;
+  background: #b91c1c;
+}
+
+.adm-button--danger-solid:hover:not(:disabled) {
+  background: #991b1b;
+}
+
+@media (max-width: 767px) {
+  .adm-item__danger {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .adm-delete__actions {
+    justify-content: stretch;
+  }
+
+  .adm-delete__actions .adm-button {
+    flex: 1;
+  }
+}
