@@ -118,7 +118,9 @@ export default function bootPreload(supabaseUrl: string | undefined, publishable
           if (!entries.has(f)) meta?.importedCss?.forEach((x) => css.add(x))
         }
         for (const f of entries) files.delete(f)
-        for (const f of css) tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'style', href: `/${f}` }, injectTo: 'head' })
+        // crossorigin must match Vite's dynamic-import loader, which requests these stylesheets
+        // in CORS mode; without it the browser can't reuse the preload and downloads each twice.
+        for (const f of css) tags.push({ tag: 'link', attrs: { rel: 'preload', as: 'style', crossorigin: true, href: `/${f}` }, injectTo: 'head' })
         // The Latin Space Grotesk file — the only face the first screen uses — fetched right away.
         for (const a of Object.values(bundle))
           if (a.type === 'asset' && /(^|\/)space-grotesk-latin-(?!ext-)[\w-]+\.woff2$/.test(a.fileName))
