@@ -15,6 +15,7 @@ import { skillsBudget } from '../../config/scene'
 import { skills, skillsSection } from '../../data/skills'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useResponsive } from '../../hooks/useResponsive'
+import { SafeBoundary } from '../ErrorBoundary/ErrorBoundary'
 import SkillInfo from './SkillInfo'
 import type { SkillsState } from './SkillsScene'
 import './Skills.css'
@@ -204,16 +205,20 @@ export default function Skills() {
 
         <div className="skills__visual" aria-hidden="true" onClick={isMobile ? () => goTo(activeRef.current + 1) : undefined}>
           {mounted && (
-            <Suspense fallback={null}>
-              <SkillsScene
-                active={inView}
-                state={state}
-                labels={labels}
-                budget={budget}
-                reducedMotion={reducedMotion}
-                pointerParallax={!isMobile && !reducedMotion}
-              />
-            </Suspense>
+            // Own boundary: if WebGL is unavailable only the 3D spiral is dropped; the
+            // skill details, rail and controls below keep working.
+            <SafeBoundary name="skills scene">
+              <Suspense fallback={null}>
+                <SkillsScene
+                  active={inView}
+                  state={state}
+                  labels={labels}
+                  budget={budget}
+                  reducedMotion={reducedMotion}
+                  pointerParallax={!isMobile && !reducedMotion}
+                />
+              </Suspense>
+            </SafeBoundary>
           )}
           <div className="skills__labels">
             {skills.map((s, i) => (
